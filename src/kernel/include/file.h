@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright (C) 2021 TTG <prs.ttg+projectname@pm.me>
+// Copyright (C) 2021 TTG <prs.ttg+gos@pm.me>
 #ifndef _GOS_FILE
 #define _GOS_FILE
 
-#include "../../../libc/include/stdint.h"
+#include "../../libc/include/stdint.h"
 
 /*
 0 	    100 	File name

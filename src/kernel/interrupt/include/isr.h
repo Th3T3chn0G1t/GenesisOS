@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright (C) 2021 TTG <prs.ttg+projectname@pm.me>
+// Copyright (C) 2021 TTG <prs.ttg+gos@pm.me>
 #ifndef _GOS_ISR
 #define _GOS_ISR
 

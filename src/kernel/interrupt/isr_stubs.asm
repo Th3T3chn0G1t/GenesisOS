@@ -1,5 +1,5 @@
 ; SPDX-License-Identifier: GPL-3.0-or-later
-; Copyright (C) 2021 TTG <prs.ttg+projectname@pm.me>
+; Copyright (C) 2021 TTG <prs.ttg+gos@pm.me>
 extern _gos_interrupt_handler
 
 global _gos_isr_stub

@@ -32,6 +32,7 @@ void gos_terminal_clear(gos_vga_color col) {
 } 
 
 void gos_terminal_putchar(char c) {
+    if(!c) return;
     if(c == '\n') {
         _gos_terminal_cursor_x = 0;
         _gos_terminal_cursor_y++;

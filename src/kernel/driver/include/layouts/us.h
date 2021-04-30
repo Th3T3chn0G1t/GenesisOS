@@ -1,15 +1,13 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright (C) 2021 TTG <prs.ttg+projectname@pm.me>
-#define GOS_KB_SHIFT 0x01
-#define GOS_KB_ALT   0x02
-#define GOS_KB_CTRL  0x03
+// Copyright (C) 2021 TTG <prs.ttg+gos@pm.me>
 
-unsigned char gos_kbd_us[256] = {
+#include "common.h"
+
+unsigned char gos_kbd[256] = {
 	0, 27, '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '',
-	'	', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '
-',
+	'\t', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\n',
 	GOS_KB_CTRL, 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', '\'', '`', GOS_KB_SHIFT,
-	'\', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', GOS_KB_SHIFT,
+	'\\', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', GOS_KB_SHIFT,
 	'*',
 	GOS_KB_ALT,
 	' ',
@@ -19,8 +17,7 @@ unsigned char gos_kbd_us[256] = {
 	'+',
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 	0, 27, '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '',
-	'	', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '{', '}', '
-',
+	'\t', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '{', '}', '\n',
 	GOS_KB_CTRL, 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ':', '"', '~', GOS_KB_SHIFT,
 	'|', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', '<', '>', '?', GOS_KB_SHIFT,
 	'*',
