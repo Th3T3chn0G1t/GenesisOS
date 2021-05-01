@@ -1,0 +1,33 @@
+#!/usr/bin/python3
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Copyright (C) 2021 TTG <prs.ttg+gos@pm.me>
+
+from sys import argv
+
+if len(argv) < 3:
+    print("USAGE: mkfsimg [output] [input...]")
+
+outfile = open(argv[1], 'wb+')
+infiles = list()
+for arg in argv[2:]:
+    try: infiles.append(open(arg, 'rb'))
+    except: continue
+
+SECTOR = 512
+MAGIC = 4
+
+NAME_MAX = SECTOR - (MAGIC + 1)
+
+for file in infiles:
+    filename = file.name.replace("src/file/", '')
+    filename_len = len(filename)
+    if filename_len > NAME_MAX:
+        print(f"ERROR: File name {filename} exceeds maximum length {NAME_MAX}")
+        exit(-1)
+
+    outfile.write(b"gfs\x00")
+    outfile.write(bytes(filename, 'utf-8'))
+    outfile.write(b'\x00' * (SECTOR - (filename_len + MAGIC)))
+     
+    written = outfile.write(file.read())
+    outfile.write(b'\x00' * (SECTOR - (written % SECTOR)))

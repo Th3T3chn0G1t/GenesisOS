@@ -18,7 +18,7 @@ out = boot/genesis.elf
 
 file = $(shell find src/file)
 
-fsout = boot/genesisfs.tar
+fsout = boot/genesisfs.gfs
 
 # FIXME:  -fsanitize=undefined
 c_flags = -c -O0 \
@@ -37,8 +37,7 @@ run: $(disk) $(fsout)
 	qemu-system-x86_64 -s -no-reboot -no-shutdown -monitor stdio -hda $(disk) -hdb $(fsout)
 
 $(fsout): $(file)
-	-rm $@
-	cd src/file && tar -cf ../../$@ *
+	tools/mkgfsimg $@ $^
 
 $(disk): $(out)
 	-rm $(disk)
@@ -47,6 +46,7 @@ $(disk): $(out)
 	parted -s $(disk) mkpart primary 2048s 100%
 	echfs-utils -g -p0 $(disk) quick-format 512
 	echfs-utils -g -p0 $(disk) import boot/limine.cfg limine.cfg
+	echfs-utils -g -p0 $(disk) import /usr/local/share/limine/limine.sys limine.sys
 	echfs-utils -g -p0 $(disk) import $^ kernel.elf
 	limine-install $(disk)
 

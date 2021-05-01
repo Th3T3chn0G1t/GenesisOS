@@ -4,7 +4,6 @@
 #define _GOS_TERMINAL
 
 #include "../../../libc/include/stdint.h"
-#include <bits/stdint-uintn.h>
 
 #define GOS_VGA_BUFF_WIDTH 80
 #define GOS_VGA_BUFF_HEIGHT 25
