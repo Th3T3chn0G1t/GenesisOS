@@ -15,14 +15,6 @@
 #include "driver/include/keyboard.h"
 #include "driver/include/disk.h"
 
-#define ATA_WAIT while(gos_io_port_in(0x3F6) & 0x88) 
-
-int octoi(const char* str) {
-    int ret = 0;
-    for(char* c = (char*)str; *c; c++) ret += (*c - '0');
-    return ret;
-}
-
 void _start(struct stivale2_struct *stivale2_struct) {
     (void) stivale2_struct;
     _gos_gdt_install();
@@ -42,25 +34,19 @@ void _start(struct stivale2_struct *stivale2_struct) {
     uint32_t sector = 0;
     while(true) {
         gos_file_header_raw_T file_header;
-        gos_read_sector(sector, (uint8_t*)&file_header, 1); 
-        if(strncmp(file_header.magic, "ustar", 5)) {
-            gos_terminal_putchar('\n');
-            for(long unsigned int i = 0; i < sizeof(gos_file_header_raw_T); i++)
-                gos_terminal_puthex(((char*)&file_header)[i]);
-            gos_terminal_putchar('\n');
-            break;
-        }
-        gos_terminal_puts(file_header.size);
-        gos_terminal_putchar('\n');
-        gos_terminal_puthex(octoi(file_header.size));
-        gos_terminal_putchar('\n');
-        gos_terminal_puthex(sector);
-        gos_terminal_putchar('\n');
-
-        sector += octoi(file_header.size);
-
+        gos_read_sector(sector, (uint8_t*)&file_header, 1);
+        if(strncmp(file_header.magic, "gfs", 3)) break;
         gos_terminal_puts(file_header.name);
         gos_terminal_putchar('\n');
+        gos_terminal_puts("0x");
+        gos_terminal_puthex(file_header.size_raw[3]);
+        gos_terminal_puthex(file_header.size_raw[2]);
+        gos_terminal_puthex(file_header.size_raw[1]);
+        gos_terminal_puthex(file_header.size_raw[0]);
+        gos_terminal_putchar('\n');
+        gos_terminal_putchar('\n');
+
+        sector += file_header.size + 1;
     }
     
     gos_terminal_puts("GOS Kernel v0.2.1\n\n> "); 

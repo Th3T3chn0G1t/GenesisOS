@@ -3,4 +3,4 @@ references
 *.hdd
 genesis.asm
 *.o
-*.tar
+*.gfs

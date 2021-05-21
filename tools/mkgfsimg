@@ -15,19 +15,24 @@ for arg in argv[2:]:
 
 SECTOR = 512
 MAGIC = 4
+SIZE = 4
 
-NAME_MAX = SECTOR - (MAGIC + 1)
+NAME_MAX = SECTOR - (MAGIC + SIZE + 1)
 
+from math import ceil
 for file in infiles:
     filename = file.name.replace("src/file/", '')
     filename_len = len(filename)
     if filename_len > NAME_MAX:
         print(f"ERROR: File name {filename} exceeds maximum length {NAME_MAX}")
         exit(-1)
+    
+    filedata = file.read()
 
     outfile.write(b"gfs\x00")
+    outfile.write(ceil(len(filedata) / SECTOR).to_bytes(SIZE, 'little'))
     outfile.write(bytes(filename, 'utf-8'))
-    outfile.write(b'\x00' * (SECTOR - (filename_len + MAGIC)))
+    outfile.write(b'\x00' * (SECTOR - (filename_len + SIZE + MAGIC)))
      
-    written = outfile.write(file.read())
+    written = outfile.write(filedata)
     outfile.write(b'\x00' * (SECTOR - (written % SECTOR)))
